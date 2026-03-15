@@ -39,13 +39,22 @@ body {
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem 0.8rem;
+  width: fit-content;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--anb-border);
   border-radius: 999px;
   background: var(--anb-accent-soft);
   color: var(--anb-accent);
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.hero-badge > p {
+  margin: 0;
 }
 
 .hero-wrap h1 {
@@ -129,6 +138,19 @@ body {
   color: var(--anb-muted);
 }
 
+.hero-card > :last-child {
+  margin-bottom: 0;
+}
+
+.hero-card ul {
+  margin-bottom: 0;
+  padding-left: 1.1rem;
+}
+
+.hero-card li + li {
+  margin-top: 0.35rem;
+}
+
 .quarto-listing .listing-item {
   padding: 1rem 0;
   border-bottom: 1px solid var(--anb-border);
@@ -153,6 +175,11 @@ body {
 @media (max-width: 991.98px) {
   .hero-wrap {
     padding: 1.5rem;
+  }
+
+  .hero-badge {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
   }
 
   .hero-grid {
