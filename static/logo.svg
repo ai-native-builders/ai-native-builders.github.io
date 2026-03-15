@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="72" viewBox="0 0 320 72" role="img" aria-labelledby="title desc">
+  <title id="title">AI Native Builders logo</title>
+  <desc id="desc">A rounded blue mark with the letters AI and the text Native Builders.</desc>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#274d8b"/>
+      <stop offset="100%" stop-color="#67a8d8"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="8" width="56" height="56" rx="18" fill="url(#g)"/>
+  <path d="M19 48l11-24h4l11 24h-5l-2.4-5.7H26.4L24 48zm9-9.9h8l-4-9.7zM48 24h5v24h-5z" fill="#ffffff"/>
+  <text x="74" y="33" fill="#233044" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="20" font-weight="700">AI Native</text>
+  <text x="74" y="56" fill="#607086" font-family="Pretendard, Noto Sans KR, sans-serif" font-size="20" font-weight="500">Builders</text>
+</svg>

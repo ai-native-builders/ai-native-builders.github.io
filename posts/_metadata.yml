@@ -1,0 +1,6 @@
+freeze: true
+title-block-banner: false
+comments: false
+format:
+  html:
+    toc: true

@@ -1,0 +1,41 @@
+/*-- scss:defaults --*/
+
+$font-family-sans-serif: "Pretendard Variable", Pretendard, "SUIT Variable", "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !default;
+$font-family-monospace: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace !default;
+$font-size-root: 16px;
+$headings-font-weight: 700 !default;
+
+$anb-ink: #e6edf7;
+$anb-muted: #a5b2c4;
+$anb-accent: #8db5ff;
+$anb-accent-strong: #b6d0ff;
+$anb-line: #2c3a4b;
+$anb-bg: #0e1724;
+$anb-panel: #162334;
+
+$body-bg: $anb-bg;
+$body-color: $anb-ink;
+$link-color: $anb-accent;
+$navbar-bg: rgba(18, 29, 44, 0.88);
+$navbar-fg: $anb-ink;
+$navbar-hl: $anb-accent;
+$footer-bg: transparent;
+$footer-fg: $anb-muted;
+$sidebar-bg: #142132;
+$sidebar-fg: $anb-ink;
+$sidebar-hl: $anb-accent;
+$border-color: $anb-line;
+$code-bg: #132134;
+$code-color: $anb-accent-strong;
+$code-block-bg: #132134;
+$code-block-border-left: $anb-accent;
+$code-block-border-left-style: solid;
+$code-block-border-left-size: 3px;
+$pagination-bg: $anb-panel;
+$pagination-border-color: $anb-line;
+$pagination-color: $anb-muted;
+$pagination-hover-bg: #1d3047;
+$pagination-hover-color: $anb-ink;
+$pagination-active-bg: $anb-accent;
+$pagination-active-border-color: $anb-accent;
+$pagination-active-color: #0e1724;
