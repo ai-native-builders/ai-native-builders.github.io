@@ -1,7 +1,11 @@
+<section class="post-category-rail" id="post-category-rail" hidden>
+  <h2 class="post-category-rail-title">카테고리</h2>
+  <div class="post-category-rail-list" id="post-category-rail-list"></div>
+</section>
+
 <section class="post-nav" id="post-nav" hidden>
   <div class="post-nav-header">
     <h2 class="post-nav-title">이어서 읽기</h2>
-    <div class="post-nav-current-categories" id="post-nav-current-categories"></div>
   </div>
   <div class="post-nav-grid" id="post-nav-grid"></div>
 </section>
@@ -14,11 +18,13 @@
   };
 
   const titleBlock = document.querySelector('header.quarto-title-block');
+  const mainContent = document.getElementById('quarto-document-content');
+  const categoryRail = document.getElementById('post-category-rail');
+  const categoryRailList = document.getElementById('post-category-rail-list');
   const navRoot = document.getElementById('post-nav');
   const navGrid = document.getElementById('post-nav-grid');
-  const currentCategories = document.getElementById('post-nav-current-categories');
 
-  if (!titleBlock || !navRoot || !navGrid || !window.location.pathname.includes('/posts/')) {
+  if (!titleBlock || !mainContent || !categoryRail || !categoryRailList || !navRoot || !navGrid || !window.location.pathname.includes('/posts/')) {
     return;
   }
 
@@ -27,9 +33,11 @@
   const categories = categoryNodes.map((node) => node.textContent.trim()).filter(Boolean);
 
   if (categories.length > 0) {
-    currentCategories.innerHTML = categories
-      .map((category) => `<span class="post-nav-chip">${category}</span>`)
+    categoryRailList.innerHTML = categories
+      .map((category) => `<a class="post-category-rail-link" href="/index.html#category=${encodeURIComponent(category)}">${category}</a>`)
       .join('');
+    mainContent.prepend(categoryRail);
+    categoryRail.hidden = false;
   }
 
   const formatDate = (value) => {
