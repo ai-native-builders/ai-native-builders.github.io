@@ -4,3 +4,4 @@ comments: false
 format:
   html:
     toc: true
+    include-after-body: ../../post-navigation.html

@@ -35,7 +35,6 @@ format:
   html:
     theme: theme_light.scss
     css: styles.css
-    include-after-body: post-navigation.html
     toc: true
     smooth-scroll: true
     code-copy: true

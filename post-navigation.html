@@ -1,8 +1,3 @@
-<section class="post-category-rail" id="post-category-rail" hidden>
-  <h2 class="post-category-rail-title">카테고리</h2>
-  <div class="post-category-rail-list" id="post-category-rail-list"></div>
-</section>
-
 <section class="post-nav" id="post-nav" hidden>
   <div class="post-nav-header">
     <h2 class="post-nav-title">이어서 읽기</h2>
@@ -19,12 +14,12 @@
 
   const titleBlock = document.querySelector('header.quarto-title-block');
   const mainContent = document.getElementById('quarto-document-content');
-  const categoryRail = document.getElementById('post-category-rail');
-  const categoryRailList = document.getElementById('post-category-rail-list');
+  const marginSidebar = document.getElementById('quarto-margin-sidebar');
+  const title = titleBlock.querySelector('.quarto-title');
   const navRoot = document.getElementById('post-nav');
   const navGrid = document.getElementById('post-nav-grid');
 
-  if (!titleBlock || !mainContent || !categoryRail || !categoryRailList || !navRoot || !navGrid || !window.location.pathname.includes('/posts/')) {
+  if (!titleBlock || !mainContent || !title || !navRoot || !navGrid || !window.location.pathname.includes('/posts/')) {
     return;
   }
 
@@ -33,11 +28,26 @@
   const categories = categoryNodes.map((node) => node.textContent.trim()).filter(Boolean);
 
   if (categories.length > 0) {
-    categoryRailList.innerHTML = categories
-      .map((category) => `<a class="post-category-rail-link" href="/index.html#category=${encodeURIComponent(category)}">${category}</a>`)
+    const renderCategoryLinks = () => categories
+      .map((category) => `<a class="post-category-link" href="/index.html#category=${encodeURIComponent(category)}">${category}</a>`)
       .join('');
-    mainContent.prepend(categoryRail);
-    categoryRail.hidden = false;
+
+    if (marginSidebar) {
+      const sidebar = document.createElement('section');
+      sidebar.className = 'post-category-sidebar';
+      sidebar.innerHTML = `
+        <h2 class="quarto-listing-category-title">카테고리</h2>
+        <div class="post-category-sidebar-list">${renderCategoryLinks()}</div>
+      `;
+      marginSidebar.prepend(sidebar);
+    }
+
+    const inline = document.createElement('div');
+    inline.className = 'post-category-inline';
+    inline.innerHTML = renderCategoryLinks();
+    title.appendChild(inline);
+
+    titleBlock.classList.add('post-category-upgraded');
   }
 
   const formatDate = (value) => {
