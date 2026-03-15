@@ -37,6 +37,7 @@ format:
       light: theme_light.scss
       dark: theme_dark.scss
     css: styles.css
+    include-after-body: post-navigation.html
     toc: true
     smooth-scroll: true
     code-copy: true

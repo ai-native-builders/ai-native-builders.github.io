@@ -1,0 +1,111 @@
+<section class="post-nav" id="post-nav" hidden>
+  <div class="post-nav-header">
+    <h2 class="post-nav-title">이어서 읽기</h2>
+    <div class="post-nav-current-categories" id="post-nav-current-categories"></div>
+  </div>
+  <div class="post-nav-grid" id="post-nav-grid"></div>
+</section>
+
+<script>
+(() => {
+  const normalizePath = (value) => {
+    const url = new URL(value, window.location.origin);
+    return url.pathname.replace(/index\.html$/, '').replace(/\/$/, '') || '/';
+  };
+
+  const titleBlock = document.querySelector('header.quarto-title-block');
+  const navRoot = document.getElementById('post-nav');
+  const navGrid = document.getElementById('post-nav-grid');
+  const currentCategories = document.getElementById('post-nav-current-categories');
+
+  if (!titleBlock || !navRoot || !navGrid || !window.location.pathname.includes('/posts/')) {
+    return;
+  }
+
+  const currentPath = normalizePath(window.location.pathname);
+  const categoryNodes = Array.from(titleBlock.querySelectorAll('.quarto-category'));
+  const categories = categoryNodes.map((node) => node.textContent.trim()).filter(Boolean);
+
+  if (categories.length > 0) {
+    currentCategories.innerHTML = categories
+      .map((category) => `<span class="post-nav-chip">${category}</span>`)
+      .join('');
+  }
+
+  const formatDate = (value) => {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(date);
+  };
+
+  const renderCard = (item, label) => {
+    const chips = (item.categories || [])
+      .map((category) => `<span class="post-nav-chip">${category}</span>`)
+      .join('');
+    const desc = item.description ? `<p class="post-nav-card-desc">${item.description}</p>` : '';
+    const date = item.pubDate ? `<span>${formatDate(item.pubDate)}</span>` : '';
+
+    return `
+      <a class="post-nav-card" href="${item.link}">
+        <span class="post-nav-label">${label}</span>
+        <h3 class="post-nav-card-title">${item.title}</h3>
+        ${desc}
+        <div class="post-nav-meta">
+          ${date}
+        </div>
+        <div class="post-nav-categories">${chips}</div>
+      </a>
+    `;
+  };
+
+  fetch(new URL('/index.xml', window.location.origin))
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to load feed: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then((xmlText) => {
+      const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
+      const items = Array.from(xml.querySelectorAll('item')).map((item) => ({
+        title: item.querySelector('title')?.textContent?.trim() || '',
+        link: item.querySelector('link')?.textContent?.trim() || '',
+        description: item.querySelector('description')?.textContent?.replace(/<!\[CDATA\[|\]\]>/g, '').trim() || '',
+        pubDate: item.querySelector('pubDate')?.textContent?.trim() || '',
+        categories: Array.from(item.querySelectorAll('category')).map((category) => category.textContent.trim()).filter(Boolean)
+      }));
+
+      const index = items.findIndex((item) => normalizePath(item.link) === currentPath);
+      if (index === -1) {
+        return;
+      }
+
+      const older = items[index + 1];
+      const newer = items[index - 1];
+      const cards = [];
+
+      if (newer) {
+        cards.push(renderCard(newer, '다음 포스트'));
+      }
+
+      if (older) {
+        cards.push(renderCard(older, '이전 포스트'));
+      }
+
+      if (cards.length === 0) {
+        return;
+      }
+
+      navGrid.innerHTML = cards.join('');
+      navRoot.hidden = false;
+    })
+    .catch(() => {
+      navRoot.hidden = true;
+    });
+})();
+</script>
