@@ -1,5 +1,7 @@
 project:
   type: website
+  resources:
+    - google437078b302cd0741.html
 
 website:
   title: "AI Native Builders"
